@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { addToDb, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
@@ -10,18 +11,41 @@ const Shop = () => {
     const [cart, setCart] = useState([])
 
     useEffect(() => {
+        console.log('product before fetch');
         fetch('products.json')
             // fetch('https://raw.githubusercontent.com/ProgrammingHero1/ema-john-resources/main/fakeData/products.json')
             .then(res => res.json())
-            .then(data => setProducts(data))
+            .then(data => {
+                setProducts(data)
+                console.log('products loaded');
+            })
     }, []);
 
 
+    useEffect(() => {
+        console.log('Local storage first line', products);
+        const storedCart = getStoredCart()
+        const savedCart = []
+        for (const id in storedCart) {
+            const addedProduct = products.find(product => product.id === id);
+            if (addedProduct) {
+                const quantity = storedCart[id]
+                addedProduct.quantity = quantity
+                // console.log(addedProduct);
+                savedCart.push(addedProduct)
+            }
+        }
+
+        setCart(savedCart);
+
+    }, [products])
+
     const handleAddToCart = (product) => {
-        console.log(product);
+        // console.log(product);
         // Do not do this:  cart.push(product)
         const newCart = [...cart, product]
         setCart(newCart)
+        addToDb(product.id)
     }
 
     return (
