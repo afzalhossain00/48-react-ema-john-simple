@@ -9,7 +9,9 @@ const Product = ({ product, handleAddToCart }) => {
     const { name, img, seller, price, ratings } = product;
     return (
         <div className='product'>
-            <img src={img} alt="" />
+            <img src={img} alt="" onError={(e) => {
+                e.target.setAttribute('src', 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/24fd5045a0b541c0ba0aacbb00f42cef_9366/Tiro_21_Track_Pants_Black_GJ9867_21_model.jpg')
+            }} />
             <div className='product-info'>
                 <p className='product-name'>{name}</p>
                 <p>Price: ${price}</p>
