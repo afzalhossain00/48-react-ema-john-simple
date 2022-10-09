@@ -4,6 +4,7 @@ import About from './component/About/About';
 import Main from './layout/Main';
 import Shop from './component/Shop/Shop'
 import Orders from './component/Orders/Orders'
+import Inventory from './component/Inventory/Inventory';
 
 function App() {
   const router = createBrowserRouter([
@@ -14,17 +15,22 @@ function App() {
         {
           path: '/',
           element: <Shop></Shop>
+        },
+        {
+          path: '/orders',
+          element: <Orders></Orders>
+        },
+        {
+          path: 'inventory',
+          element: <Inventory></Inventory>
+
+        },
+        {
+          path: '/about',
+          element: <About></About>
         }
       ]
     },
-    {
-      path: '/about',
-      element: <About></About>
-    },
-    {
-      path: '/orders',
-      element: <Orders></Orders>
-    }
   ])
   return (
     <div>
